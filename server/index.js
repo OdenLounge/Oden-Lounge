@@ -1,91 +1,87 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
-const galleryRoutes = require('./routes/galleryRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-const contactRoutes = require('./routes/contactRoutes');
-const reservationRoutes = require('./routes/reservationRoutes');
-const menuRoutes = require('./routes/menuRoutes');
+const galleryRoutes = require('./routes/galleryRoutes')
+const adminRoutes = require('./routes/adminRoutes')
+const contactRoutes = require('./routes/contactRoutes')
+const reservationRoutes = require('./routes/reservationRoutes')
+const menuRoutes = require('./routes/menuRoutes')
 
-const multer = require('multer');
-const cloudinary = require('./config/cloudinary'); // Import Cloudinary configuration
-const { v4: uuidv4 } = require('uuid'); // To generate unique filenames
-const path = require('path');
+const multer = require('multer')
+const cloudinary = require('./config/cloudinary') // Import Cloudinary configuration
+const { v4: uuidv4 } = require('uuid') // To generate unique filenames
 
-const app = express();
+const app = express()
 
 // Middleware
-app.use(cors());
-app.use(express.json());
-
-// app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Environment variables
-const PORT = process.env.PORT || 5000;
-const DB_URI = process.env.DB_URI;
+const PORT = process.env.PORT || 5000
+const DB_URI = process.env.DB_URI
 
 // Connect to MongoDB
 mongoose
   .connect(DB_URI)
   .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error(err));
+  .catch((err) => console.error('MongoDB connection error:', err))
 
-// Configure Multer for file uploads
-const storage = multer.memoryStorage(); // Using memory storage (files are stored in memory)
+// Multer storage configuration (memory storage)
+const storage = multer.memoryStorage()
 
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
   fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif/; // Accept only image files
-    const extname = filetypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-    const mimetype = filetypes.test(file.mimetype);
-
+    const allowedTypes = /jpeg|jpg|png|gif/
+    const extname = allowedTypes.test(file.originalname.toLowerCase())
+    const mimetype = allowedTypes.test(file.mimetype)
     if (extname && mimetype) {
-      return cb(null, true);
+      cb(null, true)
     } else {
-      cb(new Error('Only image files are allowed'));
+      cb(new Error('Only image files are allowed'))
     }
   },
-});
+})
 
 // Route to upload an image to Cloudinary
-app.post('/upload', upload.single('image'), async (req, res) => {
+app.post('/api/upload', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).send('No file uploaded');
+      return res.status(400).send('No file uploaded')
     }
 
-    // Upload image to Cloudinary
-    const result = await cloudinary.uploader.upload_stream(
-      { public_id: uuidv4() }, // Unique identifier for the image
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: 'oden-lounge', public_id: uuidv4() },
       (error, result) => {
         if (error) {
-          return res.status(500).send('Error uploading to Cloudinary');
+          console.error('Cloudinary upload error:', error)
+          return res.status(500).send('Error uploading to Cloudinary')
         }
-        res.json({ imageUrl: result.secure_url }); // Return the image URL from Cloudinary
+        res.json({ imageUrl: result.secure_url })
       }
-    );
+    )
 
-    // Pipe the uploaded file into Cloudinary's upload stream
-    req.pipe(result);
+    // Pipe the file buffer into Cloudinary upload stream
+    uploadStream.end(req.file.buffer)
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error:', error.message)
+    res.status(500).send('Internal server error')
   }
-});
+})
 
 // Routes
-app.use('/api', galleryRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/contact', contactRoutes);
-app.use('/api/reservations', reservationRoutes);
-app.use('/api/menu', menuRoutes);
+app.use('/api/gallery', galleryRoutes)
+app.use('/api/admin', adminRoutes)
+app.use('/api/contact', contactRoutes)
+app.use('/api/reservations', reservationRoutes)
+app.use('/api/menu', menuRoutes)
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Serverless export for Vercel
+module.exports = app
