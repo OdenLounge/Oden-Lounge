@@ -1,0 +1,20 @@
+{
+  "env": {
+    "browser": true, // For React frontend
+    "node": true, // For Node.js backend
+    "commonjs": true // Enables modern JavaScript features
+  },
+  "extends": [
+    "react-app", // React-specific rules
+    "eslint:recommended" // General best practices
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021, // ECMAScript 2021
+    "sourceType": "module" // Allows using ES6 modules
+  },
+  "rules": {
+    "no-unused-vars": "warn", // Warn for unused variables
+    "no-console": "off", // Allow console statements
+    "no-undef": "off" // Disable undefined variable checks (for global Node.js variables like require)
+  }
+}
