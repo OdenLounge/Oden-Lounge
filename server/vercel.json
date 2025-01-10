@@ -8,8 +8,8 @@
   ],
   "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/",
+      "source": "/(.*)",
+      "destination": "/",
       "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     }
   ]
