@@ -2,7 +2,7 @@ import { useState } from 'react';
 import NavBar from '../ui/NavBar';
 import PageWrapper from '../components/PageWrapper';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://oden-lounge-backend.vercel.app';
 
 function Contact() {
   const [formData, setFormData] = useState({

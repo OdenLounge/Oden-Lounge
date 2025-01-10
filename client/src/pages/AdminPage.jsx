@@ -8,7 +8,7 @@ import MenuItems from '../components/MenuItems';
 import AdminSidebar from '../components/AdminSidebar';
 import AdminLogin from './AdminLogin';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://oden-lounge-backend.vercel.app';
 
 function AdminPage() {
   const [image, setImage] = useState(null);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import NavBar from '../ui/NavBar';
 import PageWrapper from '../components/PageWrapper';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://oden-lounge-backend.vercel.app';
 
 function QueryForm() {
   const [referenceNumber, setReferenceNumber] = useState('');

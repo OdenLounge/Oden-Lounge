@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from '../ui/NavBar';
 import PageWrapper from '../components/PageWrapper';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://oden-lounge-backend.vercel.app';
 
 function ReservationForm() {
   const [isVisible, setIsVisible] = useState(false);

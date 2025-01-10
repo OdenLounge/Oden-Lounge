@@ -30,7 +30,7 @@ function Gallery() {
   const [showPopup, setShowPopup] = useState(false); // Popup state
   const [isOpen, setIsOpen] = useState(false);
 
-  const API_BASE_URL = 'http://localhost:5000/api/gallery';
+  const API_BASE_URL = 'https://oden-lounge-backend.vercel.app/api/gallery';
 
   useEffect(() => {
     const fetchGalleryData = async () => {

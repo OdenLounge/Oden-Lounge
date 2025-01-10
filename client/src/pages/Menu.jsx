@@ -21,7 +21,7 @@ const CATEGORY_BACKGROUNDS = {
     'https://res.cloudinary.com/dgdkk60jf/image/upload/v1736343253/Drinks_ghgujd.jpg',
 };
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://oden-lounge-backend.vercel.app';
 
 function Menu() {
   const [activeCategory, setActiveCategory] = useState('');
