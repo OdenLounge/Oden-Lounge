@@ -6,7 +6,7 @@ import PageWrapper from '../components/PageWrapper';
 
 const API_URL = 'https://oden-lounge-backend.vercel.app';
 
-function QueryForm() {
+function ReservationQueryForm() {
   const [referenceNumber, setReferenceNumber] = useState('');
   const [reservationDetails, setReservationDetails] = useState(null);
   const [notFound, setNotFound] = useState(false);
@@ -142,4 +142,4 @@ function QueryForm() {
   );
 }
 
-export default QueryForm;
+export default ReservationQueryForm;

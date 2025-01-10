@@ -66,7 +66,6 @@ function ReservationForm() {
         formData
       );
 
-      console.log(response.data); // Log the response immediately
       setServerResponse(response.data);
       setIsModalVisible(true); // Show the modal
     } catch (error) {
