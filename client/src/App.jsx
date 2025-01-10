@@ -5,8 +5,8 @@ import ReservationForm from './pages/ReservationForm';
 import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
 import Gallery from './pages/Gallery';
-import QueryForm from './pages/ReserverationQueryForm';
 import AdminPage from './pages/AdminPage';
+import ReservationQueryForm from './pages/ReserverationQueryForm';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/reservationQuery',
-    element: <QueryForm />,
+    element: <ReservationQueryForm />,
   },
   {
     path: '/admin',
