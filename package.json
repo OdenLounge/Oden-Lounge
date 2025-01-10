@@ -6,5 +6,8 @@
     "client": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
     "server": "npm run start --prefix server"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1"
   }
 }
