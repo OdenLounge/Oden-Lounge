@@ -18,6 +18,8 @@ export default defineConfig({
     }),
   ],
 
+  base: '/',
+
   build: {
     outDir: 'build', // Specify output directory
   },
@@ -25,7 +27,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Backend server URL
+        target: 'https://oden-lounge-backend.vercel.app', // Backend server URL
         changeOrigin: true, // Avoid issues with CORS
         rewrite: (path) => path.replace(/^\/api/, ''), // Optional: Remove /api prefix if needed
       },
