@@ -13,6 +13,7 @@
     "sourceType": "module" // Allows using ES6 modules
   },
   "rules": {
+    "react/react-in-jsx-scope": "off",
     "no-unused-vars": "warn", // Warn for unused variables
     "no-console": "off", // Allow console statements
     "no-undef": "off" // Disable undefined variable checks (for global Node.js variables like require)
