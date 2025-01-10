@@ -120,12 +120,12 @@ function NavBar({ isOpen, setIsOpen, type = 'primary' }) {
               </li>
             ))}
             <li>
-              <a
-                href="/reservationQuery"
+              <Link
+                to="/reservationquery"
                 className="block rounded border border-white px-6 py-2 transition-all hover:bg-white hover:text-gray-900"
               >
                 RESERVATIONS
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

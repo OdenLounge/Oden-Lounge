@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     element: <Gallery />,
   },
   {
-    path: '/reservationQuery',
+    path: '/reservationquery',
     element: <ReservationQueryForm />,
   },
   {
