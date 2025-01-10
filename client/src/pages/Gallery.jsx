@@ -226,7 +226,7 @@ function Gallery() {
                           ''
                         ) : (
                           <p className="text-sm text-gray-700">
-                            {Math.round(item.averageRating * 10) / 10}
+                            {Number(Math.round(item.averageRating * 10) / 10)}
                           </p>
                         )}
                       </span>
