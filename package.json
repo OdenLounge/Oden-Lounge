@@ -8,6 +8,6 @@
     "server": "npm run start --prefix server"
   },
   "devDependencies": {
-    "eslint": "^8.57.1"
+    "eslint": "^8.0.0"
   }
 }
