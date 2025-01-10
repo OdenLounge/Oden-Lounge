@@ -14,12 +14,15 @@ const menuRoutes = require('./routes/menuRoutes')
 const multer = require('multer')
 const cloudinary = require('./config/cloudinary') // Import Cloudinary configuration
 const { v4: uuidv4 } = require('uuid') // To generate unique filenames
+const path = require('path')
 
 const app = express()
 
 // Middleware
 app.use(cors())
 app.use(express.json())
+
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Environment variables
@@ -30,20 +33,23 @@ const DB_URI = process.env.DB_URI
 mongoose
   .connect(DB_URI)
   .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err))
+  .catch((err) => console.error(err))
 
-// Multer storage configuration (memory storage)
-const storage = multer.memoryStorage()
+// Configure Multer for file uploads
+const storage = multer.memoryStorage() // Using memory storage (files are stored in memory)
 
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
   fileFilter: (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|gif/
-    const extname = allowedTypes.test(file.originalname.toLowerCase())
-    const mimetype = allowedTypes.test(file.mimetype)
+    const filetypes = /jpeg|jpg|png|gif/ // Accept only image files
+    const extname = filetypes.test(
+      path.extname(file.originalname).toLowerCase()
+    )
+    const mimetype = filetypes.test(file.mimetype)
+
     if (extname && mimetype) {
-      cb(null, true)
+      return cb(null, true)
     } else {
       cb(new Error('Only image files are allowed'))
     }
@@ -51,49 +57,41 @@ const upload = multer({
 })
 
 // Route to upload an image to Cloudinary
-app.post('/api/upload', upload.single('image'), async (req, res) => {
+app.post('/upload', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).send('No file uploaded')
     }
 
-    const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: 'oden-lounge', public_id: uuidv4() },
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload_stream(
+      { public_id: uuidv4() }, // Unique identifier for the image
       (error, result) => {
         if (error) {
-          console.error('Cloudinary upload error:', error)
           return res.status(500).send('Error uploading to Cloudinary')
         }
-        res.json({ imageUrl: result.secure_url })
+        res.json({ imageUrl: result.secure_url }) // Return the image URL from Cloudinary
       }
     )
 
-    // Pipe the file buffer into Cloudinary upload stream
-    uploadStream.end(req.file.buffer)
+    // Pipe the uploaded file into Cloudinary's upload stream
+    req.pipe(result)
   } catch (error) {
-    console.error('Error:', error.message)
-    res.status(500).send('Internal server error')
+    res.status(500).send(error.message)
   }
 })
 
 // Routes
-app.use('/api/gallery', galleryRoutes)
+app.use('/api', galleryRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/contact', contactRoutes)
 app.use('/api/reservations', reservationRoutes)
 app.use('/api/menu', menuRoutes)
 
-// Health Check Route (Server is live confirmation)
-// app.get('/api/health', (req, res) => {
-//   res.status(200).send('Server is live')
-// })
-
-// Serverless export for Vercel
 app.listen(process.env.PORT, () => {
   try {
-    console.log(`server is running on port ${process.env.PORT}`)
+    console.log(`server is running on port ${PORT}`)
   } catch (error) {
     console.log(error)
   }
 })
-// module.exports = app

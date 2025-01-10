@@ -65,7 +65,7 @@ function Contact() {
         <NavBar type="secondary" isOpen={isOpen} setIsOpen={setIsOpen} />
 
         {!isOpen && (
-          <div className="relative flex min-h-screen items-center justify-start bg-[url('https://res.cloudinary.com/dgdkk60jf/image/upload/v1736341003/oden-contact_tmkvoo.jpg')] bg-cover bg-center text-slate-100">
+          <div className="relative flex min-h-screen items-center justify-start bg-[url('https://res.cloudinary.com/dgdkk60jf/image/upload/v1736341003/oden-contact_tmkvoo.jpg')] bg-cover bg-center text-slate-100 sm:p-6">
             <div className="absolute inset-0 z-10 bg-black bg-opacity-80"></div>
 
             <div className="relative z-20 mx-auto w-full max-w-lg">
