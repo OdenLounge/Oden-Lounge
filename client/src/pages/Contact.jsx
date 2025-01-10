@@ -71,7 +71,7 @@ function Contact() {
             <div className="relative z-20 mx-auto w-full max-w-lg">
               <h1 className="text-4xl font-medium">Contact Us</h1>
               <p className="mt-3">
-                Email us at Odeunlimited@gamil.com or message us here:
+                Email us at Odenunlimited@gmail.com or message us here:
               </p>
 
               <form onSubmit={handleSubmit} className="mt-10">
