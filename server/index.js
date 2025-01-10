@@ -83,13 +83,10 @@ app.use('/api/contact', contactRoutes)
 app.use('/api/reservations', reservationRoutes)
 app.use('/api/menu', menuRoutes)
 
+// Health Check Route (Server is live confirmation)
+app.get('/api/health', (req, res) => {
+  res.status(200).send('Server is live')
+})
+
 // Serverless export for Vercel
 module.exports = app
-
-// app.listen(process.env.PORT, () => {
-//   try {
-//     console.log(`server is running on port ${process.env.PORT}`)
-//   } catch (error) {
-//     console.log(error)
-//   }
-// })
