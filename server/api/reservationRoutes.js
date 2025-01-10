@@ -1,12 +1,12 @@
 // reservationRoutes.js
 
 // Load environment variables from .env file
-require('dotenv').config();
+require('dotenv').config()
 
-const express = require('express');
-const router = express.Router();
-const Reservation = require('../models/reservation');
-const nodemailer = require('nodemailer');
+const express = require('express')
+const router = express.Router()
+const Reservation = require('../models/reservation')
+const nodemailer = require('nodemailer')
 
 // Configure email transport
 const transporter = nodemailer.createTransport({
@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER, // Email from .env
     pass: process.env.EMAIL_PASS, // App password from .env
   },
-});
+})
 
 // Create a reservation (public route)
 router.post('/', async (req, res) => {
@@ -23,11 +23,11 @@ router.post('/', async (req, res) => {
     const referenceNumber = Math.random()
       .toString(36)
       .substring(2, 15)
-      .toUpperCase();
-    const newReservation = new Reservation({ ...req.body, referenceNumber });
+      .toUpperCase()
+    const newReservation = new Reservation({ ...req.body, referenceNumber })
 
     // Save reservation to the database
-    const savedReservation = await newReservation.save();
+    const savedReservation = await newReservation.save()
 
     // Send email to admin and customer
     const mailOptions = [
@@ -41,18 +41,22 @@ router.post('/', async (req, res) => {
         subject: 'New Reservation Received',
         text: `A new reservation has been made.\n\nDetails:\nName: ${req.body.fName} ${req.body.lName}\nGuests: ${req.body.guest}\nDate: ${req.body.date}\nTime: ${req.body.time}\nReference Number: ${referenceNumber}`,
       },
-    ];
+    ]
 
     // Send emails
     await Promise.all(
       mailOptions.map((options) => transporter.sendMail(options))
-    );
+    )
 
-    res.status(201).json(savedReservation);
+    res.status(201).json(savedReservation)
   } catch (error) {
-    console.error('Error creating reservation:', error.message);
-    res.status(500).json({ error: 'Failed to create reservation' });
+    console.error('Error creating reservation:', error.message)
+    res.status(500).json({ error: 'Failed to create reservation' })
   }
-});
+})
 
-module.exports = router;
+module.exports = (req, res) => {
+  const app = express()
+  app.use('/api/reservations', router) // Mount the gallery router on '/api/gallery'
+  return app(req, res) // Vercel expects this pattern
+}

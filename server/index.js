@@ -5,11 +5,11 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
-const galleryRoutes = require('./routes/galleryRoutes')
-const adminRoutes = require('./routes/adminRoutes')
-const contactRoutes = require('./routes/contactRoutes')
-const reservationRoutes = require('./routes/reservationRoutes')
-const menuRoutes = require('./routes/menuRoutes')
+const galleryRoutes = require('./api/galleryRoutes')
+const adminRoutes = require('./api/adminRoutes')
+const contactRoutes = require('./api/contactRoutes')
+const reservationRoutes = require('./api/reservationRoutes')
+const menuRoutes = require('./api/menuRoutes')
 
 const multer = require('multer')
 const cloudinary = require('./config/cloudinary') // Import Cloudinary configuration
@@ -84,12 +84,12 @@ app.use('/api/reservations', reservationRoutes)
 app.use('/api/menu', menuRoutes)
 
 // Serverless export for Vercel
-// module.exports = app
+module.exports = app
 
-app.listen(process.env.PORT, () => {
-  try {
-    console.log(`server is running on port ${process.env.PORT}`)
-  } catch (error) {
-    console.log(error)
-  }
-})
+// app.listen(process.env.PORT, () => {
+//   try {
+//     console.log(`server is running on port ${process.env.PORT}`)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// })
