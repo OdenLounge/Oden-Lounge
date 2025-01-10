@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "start": "node index.js",
-    "build": "vite build",
+    "build": "react-scripts build",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write ."
