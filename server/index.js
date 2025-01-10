@@ -84,4 +84,12 @@ app.use('/api/reservations', reservationRoutes)
 app.use('/api/menu', menuRoutes)
 
 // Serverless export for Vercel
-module.exports = app
+// module.exports = app
+
+app.listen(process.env.PORT, () => {
+  try {
+    console.log(`server is running on port ${process.env.PORT}`)
+  } catch (error) {
+    console.log(error)
+  }
+})
