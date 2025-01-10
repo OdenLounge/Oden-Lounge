@@ -10,7 +10,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "package.json",
       "destination": "/index.html"
     }
   ]
