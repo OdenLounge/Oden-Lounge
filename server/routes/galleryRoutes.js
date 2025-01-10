@@ -125,8 +125,4 @@ router.post('/gallery/:id/rate', async (req, res) => {
   }
 })
 
-module.exports = (req, res) => {
-  const app = express()
-  app.use('/api/gallery', router) // Mount the gallery router on '/api/gallery'
-  return app(req, res) // Vercel expects this pattern
-}
+module.exports = router

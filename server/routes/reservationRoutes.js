@@ -55,8 +55,4 @@ router.post('/', async (req, res) => {
   }
 })
 
-module.exports = (req, res) => {
-  const app = express()
-  app.use('/api/reservations', router) // Mount the gallery router on '/api/gallery'
-  return app(req, res) // Vercel expects this pattern
-}
+module.exports = router

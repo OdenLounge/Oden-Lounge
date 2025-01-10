@@ -36,8 +36,4 @@ Message: ${message}`,
   }
 })
 
-module.exports = (req, res) => {
-  const app = express()
-  app.use('/api/contact', router) // Mount the gallery router on '/api/gallery'
-  return app(req, res) // Vercel expects this pattern
-}
+module.exports = router
