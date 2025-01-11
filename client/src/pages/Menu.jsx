@@ -103,7 +103,7 @@ function Menu() {
               ) : (
                 <div
                   className={`sticky top-0 z-20 mb-8 flex flex-wrap justify-center gap-6 py-4 ${
-                    scrolling ? 'bg-transparent' : '' // Add background color when scrolled
+                    scrolling ? 'bg-black' : '' // Add background color when scrolled
                   }`}
                 >
                   {Object.keys(menuItems).map((category) => (
