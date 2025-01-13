@@ -59,38 +59,27 @@ router.delete('/images/:imageId', async (req, res) => {
   const { imageId } = req.params
 
   try {
-    // Find the image in DB
+    console.log('Received request to delete image with ID:', imageId)
+
     const galleryItem = await Gallery.findById(imageId)
 
     if (!galleryItem) {
+      console.error('Image not found in DB')
       return res.status(404).json({ error: 'Image not found' })
     }
 
-    // Extract Cloudinary public ID (you need to store this when uploading)
     const publicId = galleryItem.image.split('/').pop().split('.')[0]
+    console.log('Extracted Cloudinary public ID:', publicId)
 
-    // Delete image from Cloudinary
-    await cloudinary.uploader.destroy(publicId, (error, result) => {
-      console.log(result)
-      if (error) {
-        console.error('Error deleting from Cloudinary:', error)
-        return res
-          .status(500)
-          .json({ error: 'Failed to delete image from Cloudinary' })
-      }
+    const cloudinaryResult = await cloudinary.uploader.destroy(publicId)
+    console.log('Cloudinary deletion result:', cloudinaryResult)
 
-      // Delete image record from DB after successful Cloudinary deletion
-      Gallery.findByIdAndDelete(imageId, (err) => {
-        if (err) {
-          console.error('Error deleting image from DB:', err)
-          return res
-            .status(500)
-            .json({ error: 'Failed to delete image from DB' })
-        }
+    // console.log('Public ID being sent to Cloudinary:', publicId)
 
-        res.json({ message: 'Image and associated data deleted successfully' })
-      })
-    })
+    await Gallery.findByIdAndDelete(imageId)
+    console.log('Successfully deleted image from DB:', imageId)
+
+    res.json({ message: 'Image and associated data deleted successfully' })
   } catch (error) {
     console.error('Error deleting image and data:', error)
     res.status(500).json({ error: 'Failed to delete image and data' })
@@ -138,10 +127,56 @@ router.put('/update-reservation/:id', async (req, res) => {
 
     // Send email notification
     const mailOptions = {
-      to: reservation.email,
+      to: reservation.email, // Customer's email
       subject: 'Reservation Status Update',
-      text: `Dear ${reservation.fName},\n\nYour reservation status has been updated to: ${status}.\nReference Number: ${reservation.referenceNumber}`,
+      html: `
+        <div style="background: #ffffff; font-family: Arial, sans-serif; color: #333; line-height: 1.5; padding: 20px; border: 1px solid #ddd; border-radius: 5px; max-width: 600px; margin: auto;">
+          <div style="text-align: right;">
+            <img src="https://res.cloudinary.com/dgdkk60jf/image/upload/v1736726090/Oden_logo_onalqy.png" alt="Website Logo" style="max-height: 50px;" />
+          </div>
+          <h2 style="color: ${
+            status === 'Confirmed'
+              ? '#4CAF50'
+              : status === 'Cancelled'
+              ? '#f44336'
+              : '#FF9800'
+          }; text-align: center;">
+            Reservation ${
+              req.body.status.charAt(0).toUpperCase() + req.body.status.slice(1)
+            }
+          </h2>
+          <p>Dear <strong>${reservation.fName}</strong>,</p>
+          <p>We would like to inform you about the status of your reservation.</p>
+          <p>
+            <strong>Reservation Status:</strong> <span style="color: ${
+              req.body.status === 'confirmed'
+                ? '#4CAF50'
+                : req.body.status === 'canceled'
+                ? '#f44336'
+                : '#FF9800'
+            };">${
+        req.body.status.charAt(0).toUpperCase() + req.body.status.slice(1)
+      }</span>
+          </p>
+          <p>
+            <strong>Reference Number:</strong> <span style="color: #4CAF50;">${
+              reservation.referenceNumber
+            }</span>
+          </p>
+          <p>
+            <strong>Guests:</strong> ${reservation.guest}<br>
+            <strong>Date:</strong> ${reservation.date}<br>
+            <strong>Time:</strong> ${reservation.time}
+          </p>
+          <p>Thank you for choosing us! If you have any further questions, feel free to contact us.</p>
+          <hr style="border: none; border-top: 1px solid #ddd;" />
+          <p style="font-size: 0.9em; color: #888;">
+            For any issues, you can reach us at <a href="mailto:admin@odenlounge.co.uk" style="color: #4CAF50;">admin@odenlounge.co.uk</a>.
+          </p>
+        </div>
+      `,
     }
+
     await transporter.sendMail(mailOptions)
 
     // Respond with the updated reservation

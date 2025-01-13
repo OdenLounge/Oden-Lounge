@@ -14,7 +14,7 @@ function ImageUpload({ setImage, handleImageUpload, imageUrl }) {
         onClick={handleImageUpload}
         className="rounded-lg bg-blue-500 px-6 py-2 text-white transition duration-300 hover:bg-blue-600"
       >
-        Upload Image
+        Upload Image to Gallery
       </button>
       {imageUrl && (
         <div className="mt-4">

@@ -64,7 +64,15 @@ function MenuItems({
       {editingItem && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="rounded-lg bg-white p-6">
-            <h3 className="mb-4 text-xl font-semibold">Edit Menu Item</h3>
+            <h3 className="mb-4 text-xl font-semibold">
+              {`Edit ${editingItem.name}`}{' '}
+            </h3>
+            <label
+              htmlFor="name"
+              className="mb-3 block text-base font-medium text-black"
+            >
+              Name:
+            </label>
             <input
               type="text"
               name="name"
@@ -73,6 +81,13 @@ function MenuItems({
               placeholder="Name"
               className="mb-4 block w-full rounded border p-2"
             />
+
+            <label
+              htmlFor="description"
+              className="mb-3 block text-base font-medium text-black"
+            >
+              Description:
+            </label>
             <textarea
               name="description"
               value={editingItem.description}
@@ -80,6 +95,13 @@ function MenuItems({
               placeholder="Description"
               className="mb-4 block w-full rounded border p-2"
             />
+
+            <label
+              htmlFor="price"
+              className="mb-3 block text-base font-medium text-black"
+            >
+              Price:$
+            </label>
             <input
               type="number"
               name="price"

@@ -192,12 +192,21 @@ function AdminPage() {
   // Delete image and associated data (from both Cloudinary and DB)
   const deleteImage = async (imageId) => {
     try {
-      await axios.delete(`${API_URL}/api/admin/images/${imageId}`);
-      setGallery(gallery.filter((item) => item._id !== imageId)); // Update UI after deletion
+      const response = await axios.delete(
+        `${API_URL}/api/admin/images/${imageId}`
+      );
+      console.log('Delete response:', response.data);
+
+      setGallery(gallery.filter((item) => item._id !== imageId)); // Update UI
       alert('Image and its data deleted successfully');
     } catch (error) {
-      console.error('Error deleting image:', error);
-      alert('Failed to delete image');
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        alert(`Failed to delete image: ${error.response.data.error}`);
+      } else {
+        console.error('Error deleting image:', error.message);
+        alert('Failed to delete image. Check the console for details.');
+      }
     }
   };
 
