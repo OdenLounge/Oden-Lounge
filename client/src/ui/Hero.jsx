@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import Loader from './Loader'; // Import your loader component
@@ -10,9 +10,37 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa'; // Social media icons
 
+const openingHours = [
+  'Mondays - Closed',
+  'Tuesdays - 3-10pm',
+  'Wednesdays - 3-10pm',
+  'Thursdays - 3-10pm',
+  'Fridays - 3-1am',
+  'Saturdays - 1-1am',
+  'Sundays - 2-10pm',
+];
+
 function Hero() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [currentHourIndex, setCurrentHourIndex] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFadeIn(false); // Start fading out
+
+      setTimeout(() => {
+        // Move to the next index and fade in
+        setCurrentHourIndex(
+          (prevIndex) => (prevIndex + 1) % openingHours.length
+        );
+        setFadeIn(true);
+      }, 500); // Match the fade-out duration (500ms)
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
 
   // Handle the button click with delay
   const handleReservationClick = () => {
@@ -38,6 +66,16 @@ function Hero() {
         <div className="absolute left-0 top-0 h-full w-full bg-black bg-opacity-60"></div>
       </div>
 
+      <div className="absolute bottom-6 w-auto rounded bg-slate-600 bg-opacity-40 p-4 text-center font-serif text-base text-white lg:bottom-6 lg:right-6 lg:w-auto lg:text-right">
+        <p
+          className={`transition-opacity duration-500 ${
+            fadeIn ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {openingHours[currentHourIndex]}
+        </p>
+      </div>
+
       {/* Video Content */}
       <div className="relative z-10 px-4 font-serif sm:px-6 md:px-8">
         <h3 className="text-xl font-light uppercase tracking-wide sm:text-2xl md:text-2xl lg:text-3xl">
@@ -46,6 +84,8 @@ function Hero() {
         <h1 className="lg:9xl font-serif text-5xl font-extrabold tracking-wide sm:mb-20 sm:text-6xl md:text-[5.5rem]">
           <span className="mr-2 sm:mr-5">ODEN</span>LOUNGE
         </h1>
+
+        {/* Subtle Opening Hours */}
 
         {/* Button */}
         <div className="mt-6">
