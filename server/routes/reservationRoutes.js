@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
             <p>Thank you for choosing us!</p>
             <hr style="border: none; border-top: 1px solid #ddd;" />
             <p style="font-size: 0.9em; color: #888;">
-              If you have any questions, feel free to contact us at <a href="mailto:support@example.com" style="color: #4CAF50;">support@example.com</a>.
+              If you have any questions, feel free to contact us at <a href="mailto:admin@odenlounge.co.uk" style="color: #4CAF50;">admin@odenlounge.co.uk</a>.
             </p>
           </div>
         `,
