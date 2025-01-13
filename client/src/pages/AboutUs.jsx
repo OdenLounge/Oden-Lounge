@@ -67,17 +67,17 @@ function AboutUs() {
             </div>
 
             {/* Content in the Center */}
-            <div className="relative z-10 mx-auto flex h-auto w-full flex-col items-center justify-center px-6 pt-5 sm:w-2/4 md:px-12 xl:px-24">
-              <h2 className="text-center text-3xl font-bold italic md:text-4xl">
+            <div className="relative z-10 mx-auto flex h-auto w-full flex-col items-center justify-center px-4 pt-5 sm:w-3/4 md:w-2/4 md:px-10 xl:px-20">
+              <h2 className="break-words text-center text-2xl font-bold italic sm:text-3xl md:text-4xl">
                 “Come for a drink, Stay for a meal”
               </h2>
-              <p className="mt-6 w-full text-center">
+              <p className="mt-6 w-full break-words text-center text-sm sm:text-base md:text-lg">
                 Oden Lounge is the first of its kind in the heart of Crewe, and
                 our aim is to create an atmosphere that is not just for
                 relaxation and entertainment for our esteemed customers, but
                 where pleasant memories can be made.
               </p>
-              <p className="mt-4 text-center">
+              <p className="mt-4 w-full break-words text-center text-sm sm:text-base md:text-lg">
                 The conception of Oden Lounge in Crewe was based on the need to
                 bring together the fast-growing multicultural community under
                 one roof to experience a variety of amazing services we have to
@@ -92,7 +92,7 @@ function AboutUs() {
                 from the stresses of day-to-day life and integrate nicely into
                 the community.
               </p>
-              <p className="mt-4 text-center">
+              <p className="mt-4 w-full break-words text-center text-sm sm:text-base md:text-lg">
                 We look forward to welcoming you to our exquisite lounge.
               </p>
             </div>
