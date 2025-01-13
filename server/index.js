@@ -5,14 +5,14 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
-const galleryRoutes = require('../routes/galleryRoutes')
-const adminRoutes = require('../routes/adminRoutes')
-const contactRoutes = require('../routes/contactRoutes')
-const reservationRoutes = require('../routes/reservationRoutes')
-const menuRoutes = require('../routes/menuRoutes')
+const galleryRoutes = require('./routes/galleryRoutes')
+const adminRoutes = require('./routes/adminRoutes')
+const contactRoutes = require('./routes/contactRoutes')
+const reservationRoutes = require('./routes/reservationRoutes')
+const menuRoutes = require('./routes/menuRoutes')
 
 const multer = require('multer')
-const cloudinary = require('../config/cloudinary') // Import Cloudinary configuration
+const cloudinary = require('./config/cloudinary') // Import Cloudinary configuration
 const { v4: uuidv4 } = require('uuid') // To generate unique filenames
 const path = require('path')
 
