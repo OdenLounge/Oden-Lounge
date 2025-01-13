@@ -95,3 +95,5 @@ app.listen(process.env.PORT, () => {
     console.log(error)
   }
 })
+
+module.exports = app
