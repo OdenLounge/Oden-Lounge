@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   const { name, email, message } = req.body
 
   const mailOptions = {
-    to: 'laposhe01@gmail.com', // Admin's email address
+    to: process.env.ADMIN_EMAIL, // Admin's email address
     subject: `New Contact Form Submission from ${name}`,
     text: `You have a new message from the contact form:
 
