@@ -37,7 +37,7 @@ function Hero() {
         );
         setFadeIn(true);
       }, 500); // Match the fade-out duration (500ms)
-    }, 5000); // Change every 5 seconds
+    }, 2000); // Change every 5 seconds
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
