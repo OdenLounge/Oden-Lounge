@@ -98,14 +98,14 @@ function Hero() {
       {/* Social Media Icons */}
       <div className="hidden lg:absolute lg:left-6 lg:top-1/2 lg:flex lg:-translate-y-1/2 lg:transform lg:animate-draw-border lg:flex-col lg:items-center lg:space-y-6 lg:rounded-lg lg:border-2 lg:border-slate-600 lg:p-4 lg:opacity-0">
         <a
-          href="https://www.facebook.com"
+          href="https://www.facebook.com/share/19yGR8eTKJ/?mibextid=wwXIfr"
           target="_blank"
           rel="noopener noreferrer"
         >
           <FaFacebook className="text-3xl text-white hover:text-blue-600" />
         </a>
         <a
-          href="https://www.instagram.com"
+          href="https://www.instagram.com/odenlounge?igsh=MXNudGY1ZWUxOHRo&utm_source=qr"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -138,14 +138,14 @@ function Hero() {
 
       <div className="absolute bottom-0 left-1/2 mb-20 flex w-[80dvh] -translate-x-1/2 transform flex-row justify-center space-x-6 p-2 lg:hidden">
         <a
-          href="https://www.facebook.com"
+          href="https://www.facebook.com/share/19yGR8eTKJ/?mibextid=wwXIfr"
           target="_blank"
           rel="noopener noreferrer"
         >
           <FaFacebook className="text-3xl text-white hover:text-blue-600" />
         </a>
         <a
-          href="https://www.instagram.com"
+          href="https://www.instagram.com/odenlounge?igsh=MXNudGY1ZWUxOHRo&utm_source=qr"
           target="_blank"
           rel="noopener noreferrer"
         >
