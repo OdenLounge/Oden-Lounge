@@ -8,7 +8,7 @@
           "value": "odenlounge.co.uk"
         }
       ],
-      "destination": "http://www.odenlounge.com/$1",
+      "destination": "http://www.odenlounge.co.uk/$1",
       "permanent": true
     }
   ],
