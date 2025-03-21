@@ -170,4 +170,30 @@ router.put(
   }
 );
 
+// Delete an item from a category
+router.delete("/:categoryId/:itemId", async (req, res) => {
+  const { categoryId, itemId } = req.params;
+
+  try {
+    const menuCategory = await MenuCategory.findById(categoryId);
+
+    if (!menuCategory) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    const item = menuCategory.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    item.remove();
+    await menuCategory.save();
+
+    res.json({ message: "Menu item deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting menu item:", error.message);
+    res.status(500).json({ error: "Failed to delete menu item" });
+  }
+});
+
 module.exports = router;
