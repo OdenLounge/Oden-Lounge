@@ -302,7 +302,7 @@ function AdminPage() {
   //deleting menu item
   const deleteMenuItem = async (categoryId, itemId) => {
     try {
-      await axios.delete(`${API_URL}/api/menu/${categoryId}/${itemId}`);
+      await axios.delete(`${API_URL}/api/menu/deleteMenuItem/${categoryId}/${itemId}`);
       // Update UI
       setMenuItems((prevCategories) =>
         prevCategories.map((category) =>

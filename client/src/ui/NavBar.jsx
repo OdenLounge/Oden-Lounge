@@ -48,7 +48,7 @@ function NavBar({ isOpen, setIsOpen, type = 'primary' }) {
         {!isOpen && (
           <>
             {/* Logo Section */}
-            <a
+            <Link
               href="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
@@ -57,7 +57,7 @@ function NavBar({ isOpen, setIsOpen, type = 'primary' }) {
                 className="h-8"
                 alt="Oden logo"
               />
-            </a>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button
