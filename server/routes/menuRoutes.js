@@ -177,14 +177,14 @@ router.delete("/:categoryId/:itemId", async (req, res) => {
   try {
     const menuCategory = await MenuCategory.findById(categoryId);
 
-    if (!menuCategory) {
-      return res.status(404).json({ error: "Category not found" });
-    }
+    // if (!menuCategory) {
+    //   return res.status(404).json({ error: "Category not found" });
+    // }
 
-    const item = menuCategory.items.id(itemId);
-    if (!item) {
-      return res.status(404).json({ error: "Item not found" });
-    }
+    // const item = menuCategory.items.id(itemId);
+    // if (!item) {
+    //   return res.status(404).json({ error: "Item not found" });
+    // }
 
     item.remove();
     await menuCategory.save();
