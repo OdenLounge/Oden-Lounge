@@ -314,7 +314,7 @@ const deleteMenuItem = async (categoryId, itemId) => {
       )
     );
 
-    await axios.delete(`${API_URL}/api/menu/${categoryId}/${itemId}`);
+    await axios.delete(`${API_URL}/api/${categoryId}/${itemId}`);
     alert('Menu item deleted successfully!');
   } catch (error) {
     console.error('Error deleting menu item:', error.message);

@@ -173,7 +173,7 @@ router.put(
 );
 
 // Delete an item from a category
-router.delete("/menu/:categoryId/:itemId", async (req, res) => {
+router.delete("/:categoryId/:itemId", async (req, res) => {
   const { categoryId, itemId } = req.params;
 
   if (
