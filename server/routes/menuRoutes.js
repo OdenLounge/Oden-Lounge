@@ -171,7 +171,7 @@ router.put(
 );
 
 // Delete an item from a category
-router.delete("deleteMenuItem/:categoryId/:itemId", async (req, res) => {
+router.delete("/deleteMenuItem/:categoryId/:itemId", async (req, res) => {
   const { categoryId, itemId } = req.params;
 
   try {

@@ -300,26 +300,29 @@ function AdminPage() {
   };
 
   //deleting menu item
-  const deleteMenuItem = async (categoryId, itemId) => {
-    try {
-      await axios.delete(`${API_URL}/api/menu/deleteMenuItem/${categoryId}/${itemId}`);
-      // Update UI
-      setMenuItems((prevCategories) =>
-        prevCategories.map((category) =>
-          category._id === categoryId
-            ? {
-                ...category,
-                items: category.items.filter((item) => item._id !== itemId),
-              }
-            : category
-        )
-      );
-      alert('Menu item deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting menu item:', error.message);
-      alert('Failed to delete menu item.');
-    }
-  };
+const deleteMenuItem = async (categoryId, itemId) => {
+  const previousMenuItems = [...menuItems]; // Keep a backup for rollback
+  try {
+    setMenuItems((prevCategories) =>
+      prevCategories.map((category) =>
+        category._id === categoryId
+          ? {
+              ...category,
+              items: category.items.filter((item) => item._id !== itemId),
+            }
+          : category
+      )
+    );
+
+    await axios.delete(`${API_URL}/api/menu/deleteMenuItem/${categoryId}/${itemId}`);
+    alert('Menu item deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting menu item:', error.message);
+    setMenuItems(previousMenuItems); // Revert on failure
+    alert('Failed to delete menu item.');
+  }
+};
+
 
   const toggleCategory = (category) => {
     setOpenCategories((prev) => ({
