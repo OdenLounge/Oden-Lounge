@@ -5,6 +5,8 @@ const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const { uploads } = require("../config/cloudinary"); // Import the storage configuration from cloudinary.js
 
+const mongoose = require("mongoose");
+
 const upload = multer({ uploads });
 
 // Add a new menu category
@@ -171,22 +173,28 @@ router.put(
 );
 
 // Delete an item from a category
-router.delete("/:categoryId/:itemId", async (req, res) => {
+router.delete("/menu/:categoryId/:itemId", async (req, res) => {
   const { categoryId, itemId } = req.params;
+
+  if (
+    !mongoose.Types.ObjectId.isValid(categoryId) ||
+    !mongoose.Types.ObjectId.isValid(itemId)
+  ) {
+    return res.status(400).json({ error: "Invalid ID format" });
+  }
 
   try {
     const menuCategory = await MenuCategory.findById(categoryId);
+    if (!menuCategory) {
+      return res.status(404).json({ error: "Category not found" });
+    }
 
-    // if (!menuCategory) {
-    //   return res.status(404).json({ error: "Category not found" });
-    // }
+    const item = menuCategory.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
 
-    // const item = menuCategory.items.id(itemId);
-    // if (!item) {
-    //   return res.status(404).json({ error: "Item not found" });
-    // }
-
-    item.remove();
+    item.deleteOne(); // Use deleteOne for cleaner removal
     await menuCategory.save();
 
     res.json({ message: "Menu item deleted successfully" });
